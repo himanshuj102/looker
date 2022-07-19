@@ -59,6 +59,10 @@ view: orders {
     sql: ${TABLE}.OrderDate ;;
   }
 
+dimension: quarter {
+  type: string
+  sql: ${order_quarter} ;;
+}
   dimension: order_id {
     type: string
     primary_key: yes
@@ -178,7 +182,7 @@ view: orders {
 
   measure: count {
     type: count
-    drill_fields: [product_name, customer_name]
+    drill_fields: [customer_id,order_date,category,sub_category,product_name, customer_name]
   }
 
   measure: Revenue {
@@ -215,7 +219,7 @@ view: orders {
     sql:{% if date_granularity._parameter_value == 'Year' %}
       ${order_year}
     {% elsif date_granularity._parameter_value == 'Quarter' %}
-      ${order_quarter}
+      ${quarter}
     {% elsif date_granularity._parameter_value == 'Month' %}
       ${order_month}
     {% else %}
