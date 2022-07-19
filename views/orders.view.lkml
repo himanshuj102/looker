@@ -175,6 +175,7 @@ view: orders {
     sql: ${ship_mode}='First Class' ;;
   }
 
+
   measure: count {
     type: count
     drill_fields: [product_name, customer_name]
@@ -194,4 +195,31 @@ view: orders {
     type: sum
     sql: ${quantity} ;;
   }
+
+  parameter: date_granularity {
+    type: unquoted
+    allowed_value: {
+      label: "by Year"
+      value: "Year"
+    }
+    allowed_value: {
+      label: "by Quarter"
+      value: "Quarter"
+    }
+    allowed_value: {
+      label: "by Month"
+      value: "Month"
+    }
+  }
+  dimension: Orderdate_G {
+    sql:{% if date_granularity._parameter_value == 'Year' %}
+      ${order_year}
+    {% elsif date_granularity._parameter_value == 'Quarter' %}
+      ${order_quarter}
+    {% elsif date_granularity._parameter_value == 'Month' %}
+      ${order_month}
+    {% else %}
+      ${order_year}
+    {% endif %};;
+}
 }
