@@ -29,12 +29,24 @@ persist_with: himanshu_project
 
 #explore: returns {}
 
-explore: people {}
+#explore: people {}
+
+explore: people {
+  always_filter: {
+    filters: [people.region: "East"]
+  }
+}
 
 explore: orders {
+  access_filter: {
+    field: orders.state
+    user_attribute: state
+  }
+
   join: returns {
     type:left_outer
     sql_on: ${orders.order_id} = ${returns.order_id} ;;
     relationship: many_to_one
     }
+
 }

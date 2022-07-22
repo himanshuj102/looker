@@ -199,6 +199,11 @@ dimension: quarter {
     type: sum
     sql: ${quantity} ;;
   }
+  measure: total_Waterloo_qty {
+    type: sum
+    filters: [orders.city:  "Waterloo"]
+    sql: ${quantity} ;;
+  }
 
   parameter: date_granularity {
     type: unquoted
@@ -215,6 +220,21 @@ dimension: quarter {
       value: "Month"
     }
   }
+  # measure: category_count {
+  #   type: sum
+  #   sql:
+  #   CASE
+  #     WHEN ${category} = '{% parameter category_to_count %}'
+  #     THEN 1
+  #     ELSE 0
+  #   END
+  # ;;
+  #}
+
+  parameter: Choose_category {
+    type: string
+  }
+
   dimension: Orderdate_G {
     sql:{% if date_granularity._parameter_value == 'Year' %}
       ${order_year}
