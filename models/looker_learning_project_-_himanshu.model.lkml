@@ -38,11 +38,6 @@ explore: people {
 }
 
 explore: orders {
-  access_filter: {
-    field: orders.state
-    user_attribute: state
-  }
-
   join: returns {
     type:left_outer
     sql_on: ${orders.order_id} = ${returns.order_id} ;;
